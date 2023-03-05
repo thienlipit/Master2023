@@ -29,7 +29,6 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
 
-
         val tvN = binding.textViewN
         val tvP = binding.textViewP
         val tvQ = binding.textViewQ
