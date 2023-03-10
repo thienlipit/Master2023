@@ -1,253 +1,64 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    xmlns:tools="http://schemas.android.com/tools">
 
-   <androidx.constraintlayout.widget.Guideline
-       android:id="@+id/guidelineHorizontal1"
-       android:layout_width="wrap_content"
-       android:layout_height="wrap_content"
-       android:orientation="horizontal"
-       app:layout_constraintGuide_percent="0.25" />
+   <data>
 
-   <androidx.constraintlayout.widget.Guideline
-       android:id="@+id/guidelineHorizontal2"
-       android:layout_width="wrap_content"
-       android:layout_height="wrap_content"
-       android:orientation="horizontal"
-       app:layout_constraintGuide_percent="0.66" />
+   </data>
 
-   <androidx.constraintlayout.widget.Guideline
-       android:id="@+id/guidelineVertical1"
-       android:layout_width="wrap_content"
-       android:layout_height="wrap_content"
-       android:orientation="vertical"
-       app:layout_constraintGuide_percent="0.24" />
-
-   <androidx.constraintlayout.widget.Guideline
-       android:id="@+id/guidelineVertical2"
-       android:layout_width="wrap_content"
-       android:layout_height="wrap_content"
-       android:orientation="vertical"
-       app:layout_constraintGuide_percent="0.6"/>
-
-   <TextView
-       android:id="@+id/tv_p"
-       android:layout_width="wrap_content"
-       android:layout_height="wrap_content"
-       android:text="p = "
-       android:textSize="16sp"
-       app:layout_constraintEnd_toStartOf="@+id/guidelineVertical1"
-
-       app:layout_constraintTop_toTopOf="parent"/>
-
-   <TextView
-       android:id="@+id/tv_q"
-       android:layout_width="wrap_content"
-       android:layout_height="wrap_content"
-       android:layout_marginTop="12dp"
-       android:text="q = "
-       android:textSize="16sp"
-       app:layout_constraintEnd_toStartOf="@+id/guidelineVertical1"
-       app:layout_constraintHorizontal_bias="0.517"
-
-       app:layout_constraintTop_toBottomOf="@id/tv_p" />
-
-   <TextView
-       android:id="@+id/tv_n"
-       android:layout_width="wrap_content"
-       android:layout_height="wrap_content"
-       android:layout_marginTop="12dp"
-       android:text="n = "
-       android:textSize="16sp"
-       app:layout_constraintEnd_toStartOf="@+id/guidelineVertical1"
-       app:layout_constraintHorizontal_bias="0.517"
-
-       app:layout_constraintTop_toBottomOf="@id/tv_q" />
-
-   <TextView
-       android:id="@+id/textViewP"
-       android:layout_width="wrap_content"
-       android:layout_height="wrap_content"
-       android:hint="...."
-       app:layout_constraintTop_toTopOf="parent"
-       android:textSize="16sp"
-       app:layout_constraintStart_toStartOf="@+id/guidelineVertical1" />
-
-   <TextView
-       android:id="@+id/textViewQ"
-       android:layout_width="wrap_content"
-       android:layout_height="wrap_content"
-       android:layout_marginTop="12dp"
-       android:hint="...."
-       android:textSize="16sp"
-       app:layout_constraintStart_toStartOf="@+id/guidelineVertical1"
-       app:layout_constraintTop_toBottomOf="@id/textViewP" />
-
-   <TextView
-       android:id="@+id/textViewN"
-       android:layout_width="wrap_content"
-       android:layout_height="wrap_content"
-       android:layout_marginTop="12dp"
-       android:hint="...."
-       android:textSize="16sp"
-       app:layout_constraintStart_toStartOf="@+id/guidelineVertical1"
-       app:layout_constraintTop_toBottomOf="@id/textViewQ" />
-
-   <Button
-       android:id="@+id/btn_generate_pq"
-       android:layout_width="wrap_content"
-       android:layout_height="wrap_content"
-       android:text="Generate p,q"
-       android:backgroundTint="#658354"
-       android:layout_marginTop="12dp"
-       app:layout_constraintEnd_toEndOf="parent"
-       app:layout_constraintStart_toStartOf="@+id/guidelineVertical2"
-       app:layout_constraintTop_toTopOf="parent" />
-
-   <Button
-       android:id="@+id/btn_encrypt"
-       android:layout_width="wrap_content"
-       android:layout_height="wrap_content"
-       android:text="Encrypt"
-       android:backgroundTint="#338257"
-       android:layout_marginTop="12dp"
-       app:layout_constraintEnd_toEndOf="parent"
-       app:layout_constraintStart_toStartOf="@+id/guidelineVertical2"
-       app:layout_constraintTop_toBottomOf="@+id/btn_generate_pq" />
-
-   <Button
-       android:id="@+id/btn_decrypt"
-       android:layout_width="wrap_content"
-       android:layout_height="wrap_content"
-       android:text="Decrypt"
-       android:backgroundTint="#58934B"
-       android:layout_marginTop="12dp"
-       app:layout_constraintEnd_toEndOf="parent"
-       app:layout_constraintStart_toStartOf="@+id/guidelineVertical2"
-       app:layout_constraintTop_toBottomOf="@+id/btn_encrypt" />
-
-<!--   <com.kusu.loadingbutton.LoadingButton-->
-<!--       app:layout_constraintEnd_toEndOf="parent"-->
-<!--       app:layout_constraintStart_toStartOf="@+id/guidelineVertical2"-->
-<!--       app:layout_constraintTop_toBottomOf="@+id/btn_encrypt"-->
-<!--       android:id="@+id/btn_decrypt"-->
-<!--       android:layout_width="200dp"-->
-<!--       android:layout_height="51dp"-->
-<!--       android:layout_marginTop="20dp"-->
-<!--       android:paddingLeft="10dp"-->
-<!--       android:paddingRight="10dp"-->
-<!--       android:text="Shadow World!"-->
-<!--       android:textColor="@color/white"-->
-<!--       app:lb_buttonColor="@color/purple_700"-->
-<!--       app:lb_isShadowEnable="true"-->
-<!--       app:lb_isCircular="true"-->
-<!--       app:lb_loaderColor="@color/teal_700"-->
-<!--       app:lb_shadowColor="@color/teal_200"-->
-<!--       app:lb_shadowHeight="5dp" />-->
-
-   <TextView
-       android:id="@+id/tv_public_key"
-       android:layout_width="wrap_content"
-       android:layout_height="wrap_content"
-       android:text="Public key: "
-       app:layout_constraintEnd_toStartOf="@+id/guidelineVertical1"
-
-      app:layout_constraintTop_toBottomOf="@id/tv_n"
-      android:layout_marginTop="12dp" />
-
-   <TextView
-       android:id="@+id/tv_private_key"
-       android:layout_width="wrap_content"
-       android:layout_height="wrap_content"
-       android:text="Public key: "
-       app:layout_constraintEnd_toStartOf="@+id/guidelineVertical1"
-
-       app:layout_constraintTop_toBottomOf="@id/tv_public_key"
-       android:layout_marginTop="12dp" />
-
-   <TextView
-       android:id="@+id/private_key"
-       android:layout_width="wrap_content"
-       android:layout_height="wrap_content"
-       android:hint="...."
-       android:layout_marginTop="12dp"
-       app:layout_constraintStart_toStartOf="@+id/guidelineVertical1"
-       app:layout_constraintTop_toBottomOf="@+id/textViewN" />
-
-   <TextView
-       android:id="@+id/public_key"
-       android:layout_width="wrap_content"
-       android:layout_height="wrap_content"
-       android:hint="...."
-       android:layout_marginTop="12dp"
-       app:layout_constraintStart_toStartOf="@+id/guidelineVertical1"
-       app:layout_constraintTop_toBottomOf="@+id/private_key" />
-
-   <com.google.android.material.textfield.TextInputLayout
+   <androidx.constraintlayout.widget.ConstraintLayout
        android:layout_width="match_parent"
-       android:layout_height="0dp"
-       android:layout_marginTop="12dp"
-       app:hintTextColor="@color/black"
-       android:hint="Write your message here"
+       android:layout_height="match_parent"
+       android:background="@drawable/bg"
+       tools:context=".MainActivity">
 
-       android:layout_marginHorizontal="12dp"
-       app:layout_constraintBottom_toTopOf="@+id/lnl"
-       app:layout_constraintEnd_toEndOf="parent"
-       app:layout_constraintStart_toStartOf="parent"
-       app:layout_constraintTop_toTopOf="@+id/guidelineHorizontal1">
-
-      <com.google.android.material.textfield.TextInputEditText
-          android:id="@+id/edt_msg"
-          android:background="#E4F3F7"
-          android:textColor="@color/black"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content" />
-
-   </com.google.android.material.textfield.TextInputLayout>
-
-   <LinearLayout
-       android:id="@+id/lnl"
-       android:layout_width="match_parent"
-       android:layout_height="wrap_content"
-       app:layout_constraintEnd_toEndOf="parent"
-       app:layout_constraintStart_toStartOf="parent"
-       android:orientation="horizontal"
-       android:layout_marginHorizontal="12dp"
-       app:layout_constraintBottom_toTopOf="@+id/guidelineHorizontal2"
-       >
-      <TextView
-          android:id="@+id/tv_msg1"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:layout_marginBottom="16dp"
-          android:hint="Encrypt message: "
-           />
-      <TextView
-          android:id="@+id/tv_msg_encrypt"
+      <androidx.appcompat.widget.Toolbar
+          android:id="@+id/toolbar"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          android:layout_marginBottom="16dp"
-          android:textColor="@color/black"
-          />
-   </LinearLayout>
+          app:title="RSA"
+          app:titleTextColor="#FFFFFF"
+          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toTopOf="parent" />
 
-      <com.google.android.material.textview.MaterialTextView
-          android:padding="12dp"
-          android:id="@+id/tv_decrypt"
+      <com.google.android.material.tabs.TabLayout
+          android:id="@+id/tabLayout"
           android:layout_width="match_parent"
-          android:layout_marginHorizontal="12dp"
+          android:layout_height="50dp"
+          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toBottomOf="@+id/toolbar"
+          app:tabSelectedTextColor="#08FF00">
+
+         <com.google.android.material.tabs.TabItem
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:text="Generate Key" />
+
+         <com.google.android.material.tabs.TabItem
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:text="Encrypt" />
+
+         <com.google.android.material.tabs.TabItem
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:text="Decrypt" />
+
+      </com.google.android.material.tabs.TabLayout>
+
+      <androidx.viewpager2.widget.ViewPager2
+          android:id="@+id/viewPager2"
+          android:layout_width="match_parent"
           android:layout_height="0dp"
-          android:background="#E4F3F7"
-          android:hint="Click DECRYPT button to show message."
-          android:textColorHint="@color/black"
-          android:textColor="@color/black"
+          android:background="#C3A039"
           app:layout_constraintBottom_toBottomOf="parent"
           app:layout_constraintEnd_toEndOf="parent"
           app:layout_constraintStart_toStartOf="parent"
-          app:layout_constraintTop_toBottomOf="@+id/guidelineHorizontal2"/>
+          app:layout_constraintTop_toBottomOf="@+id/tabLayout" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+
+   </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
