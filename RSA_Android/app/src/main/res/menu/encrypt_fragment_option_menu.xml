@@ -2,13 +2,13 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/loadMyKeyPubEncOptionMenu"
-        android:title="Load my public key"/>
-    <item
-        android:id="@+id/loadOtherKeyPubEncOptionMenu"
-        android:title="Load other's public key"/>
-    <item
-        android:id="@+id/loadPlainTextEncOptionMenu"
-        android:title="Load plain text"/>
+        android:title="Load Generate Key"/>
+<!--    <item-->
+<!--        android:id="@+id/loadOtherKeyPubEncOptionMenu"-->
+<!--        android:title="Load other's public key"/>-->
+<!--    <item-->
+<!--        android:id="@+id/loadPlainTextEncOptionMenu"-->
+<!--        android:title="Load plain text"/>-->
     <item
         android:id="@+id/exportEncryptedTextEncOptionMenu"
         android:title="Export encrypted text"/>

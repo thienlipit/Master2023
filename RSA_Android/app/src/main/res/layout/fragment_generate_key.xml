@@ -10,16 +10,52 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <RadioGroup
+            android:id="@+id/radioGroup"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal">
+            <RadioButton android:id="@+id/radio_64bits"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="64 bit"
+                android:checked="true"
+                android:textColor="#FFFFFF" />
+            <RadioButton android:id="@+id/radio_128bits"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="128 bit"
+                android:textColor="#FFFFFF" />
+            <RadioButton android:id="@+id/radio_256bits"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="256 bit"
+                android:textColor="#FFFFFF" />
+            <RadioButton android:id="@+id/radio_512bits"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="512 bit"
+                android:textColor="#FFFFFF" />
+            <RadioButton android:id="@+id/radio_1024bits"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="1024 bit"
+                android:textColor="#FFFFFF" />
+        </RadioGroup>
+
         <LinearLayout
             android:id="@+id/linearLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="10dp"
-            android:layout_marginVertical="10dp"
-            android:orientation="horizontal"
+            android:orientation="vertical"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/radioGroup"
             android:focusable="true"
             android:focusableInTouchMode="true">
 
@@ -27,54 +63,51 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="10dp"
-                android:layout_weight="1"
                 android:background="@drawable/round_shape"
-                android:orientation="vertical"
+                android:orientation="horizontal"
                 android:paddingHorizontal="10dp"
                 android:paddingVertical="5dp">
 
                 <TextView
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="P : "
+                    android:text="P: "
+
                     android:textColor="#09165E"
                     android:textSize="8pt"
                     android:textStyle="bold" />
 
-                <EditText
+                <TextView
                     android:id="@+id/pNumberEditText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="number"
-                    android:textColor="#000000"
-                    android:singleLine="true"/>
+                    android:textColor="#000000" />
             </LinearLayout>
 
             <LinearLayout
+                android:layout_marginTop="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="10dp"
                 android:layout_weight="1"
                 android:background="@drawable/round_shape"
-                android:orientation="vertical"
+                android:orientation="horizontal"
                 android:paddingHorizontal="10dp"
                 android:paddingVertical="5dp">
 
                 <TextView
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Q : "
+                    android:text="Q: "
                     android:textColor="#09165E"
                     android:textSize="8pt"
                     android:textStyle="bold" />
 
-                <EditText
+                <TextView
                     android:id="@+id/qNumberEditText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="number"
-                    android:textColor="#000000"
-                    android:singleLine="true"/>
+                    android:textColor="#000000" />
             </LinearLayout>
         </LinearLayout>
 
@@ -83,7 +116,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="20dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="12dp"
             android:background="#001C9F"
             android:text="Generate key"
             android:textColor="#FFFFFF"
@@ -93,17 +126,17 @@
             app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
 
         <ScrollView
+            android:layout_marginTop="10dp"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/generateKeyButton">
-            <androidx.constraintlayout.widget.ConstraintLayout
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginHorizontal="10dp"
-                android:layout_marginVertical="20dp"
                 android:background="@drawable/round_shape"
                 android:paddingBottom="20dp">
 
@@ -111,175 +144,152 @@
                     android:id="@+id/textView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="20dp"
+                    android:layout_marginStart="20dp"
                     android:layout_marginTop="20dp"
                     android:text="N : "
                     android:textColor="#09165E"
                     android:textSize="8pt"
-                    android:textStyle="bold"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    android:textStyle="bold" />
 
                 <TextView
+                    android:layout_toEndOf="@+id/textView"
                     android:id="@+id/nNumberTextView"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginEnd="15dp"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginTop="10dp"
+                    android:hint="443214321u4321"
                     android:textColor="#000000"
                     android:textSize="8pt"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.0"
-                    app:layout_constraintStart_toEndOf="@+id/textView"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    android:scrollbars = "horizontal" />
 
                 <TextView
+                    android:layout_below="@id/nNumberTextView"
                     android:id="@+id/textView3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
-                    android:layout_marginTop="20dp"
-                    android:text="Phi(N) : "
+                    android:layout_marginTop="12dp"
+                    android:text="Phi:  "
                     android:textColor="#09165E"
                     android:textSize="8pt"
-                    android:textStyle="bold"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textView" />
+                    android:textStyle="bold" />
 
                 <TextView
+                    android:layout_below="@+id/nNumberTextView"
+                    android:layout_toEndOf="@id/textView3"
                     android:id="@+id/phiNNumberTextView"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginEnd="15dp"
+                    android:layout_marginTop="10dp"
                     android:textColor="#000000"
                     android:textSize="8pt"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.0"
-                    app:layout_constraintStart_toEndOf="@+id/textView3"
-                    app:layout_constraintTop_toBottomOf="@+id/nNumberTextView" />
+                    android:hint="123456789"
+                    android:scrollbars = "vertical" />
 
                 <TextView
+                    android:layout_below="@id/phiNNumberTextView"
                     android:id="@+id/textView4"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginTop="12dp"
                     android:text="E : "
                     android:textColor="#09165E"
                     android:textSize="8pt"
-                    android:textStyle="bold"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textView3" />
+                    android:textStyle="bold" />
 
                 <TextView
+                    android:layout_below="@id/phiNNumberTextView"
+                    android:layout_toEndOf="@id/textView4"
                     android:id="@+id/eNumberTextView"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginEnd="15dp"
+                    android:hint="123456789"
+                    android:layout_marginTop="10dp"
                     android:textColor="#000000"
-                    android:textSize="8pt"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.0"
-                    app:layout_constraintStart_toEndOf="@+id/textView4"
-                    app:layout_constraintTop_toBottomOf="@+id/phiNNumberTextView" />
+                    android:textSize="8pt" />
 
                 <TextView
+                    android:layout_below="@+id/eNumberTextView"
                     android:id="@+id/textView5"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginTop="12dp"
                     android:text="D : "
                     android:textColor="#09165E"
                     android:textSize="8pt"
-                    android:textStyle="bold"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textView4" />
+                    android:textStyle="bold" />
 
                 <TextView
+                    android:layout_toEndOf="@id/textView5"
+                    android:layout_below="@id/eNumberTextView"
                     android:id="@+id/dNumberTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginEnd="15dp"
+                    android:layout_marginTop="10dp"
+                    android:textColor="#000000"
+                    android:textSize="8pt" />
+
+                <TextView
+                    android:layout_below="@+id/dNumberTextView"
+                    android:id="@+id/textView6"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="12dp"
+                    android:text="Public key ( E , N ) : "
+                    android:textColor="#09165E"
+                    android:textSize="8pt"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_below="@id/textView6"
+                    android:id="@+id/publicKeyTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginEnd="15dp"
                     android:textColor="#000000"
                     android:textSize="8pt"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.0"
-                    app:layout_constraintStart_toEndOf="@+id/textView5"
-                    app:layout_constraintTop_toBottomOf="@+id/eNumberTextView" />
+                    app:layout_constraintStart_toEndOf="@+id/textView6"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-                <HorizontalScrollView
+                <TextView
+                    android:layout_below="@+id/publicKeyTextView"
+                    android:id="@+id/textView7"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="12dp"
+                    android:text="Private key ( D , N ) : "
+                    android:textColor="#09165E"
+                    android:textSize="8pt"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_below="@id/textView7"
+                    android:id="@+id/privateKeyTextView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textView5"
-                    android:nestedScrollingEnabled="true"
-                    android:orientation="horizontal">
-
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-
-                        <TextView
-                            android:id="@+id/textView6"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="20dp"
-                            android:text="Public key ( E , N ) : "
-                            android:textColor="#09165E"
-                            android:textSize="8pt"
-                            android:textStyle="bold"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
-
-                        <TextView
-                            android:id="@+id/publicKeyTextView"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="15dp"
-                            android:textColor="#000000"
-                            android:textSize="8pt"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintHorizontal_bias="0.0"
-                            app:layout_constraintStart_toEndOf="@+id/textView6"
-                            app:layout_constraintTop_toTopOf="parent" />
-
-                        <TextView
-                            android:id="@+id/textView7"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="20dp"
-                            android:layout_marginTop="20dp"
-                            android:text="Private key ( D , N ) : "
-                            android:textColor="#09165E"
-                            android:textSize="8pt"
-                            android:textStyle="bold"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/textView6" />
-
-                        <TextView
-                            android:id="@+id/privateKeyTextView"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="15dp"
-                            android:layout_marginTop="20dp"
-                            android:textColor="#000000"
-                            android:textSize="8pt"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintHorizontal_bias="0.0"
-                            app:layout_constraintStart_toEndOf="@+id/textView7"
-                            app:layout_constraintTop_toBottomOf="@+id/publicKeyTextView" />
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-                </HorizontalScrollView>
-            </androidx.constraintlayout.widget.ConstraintLayout>
+                    android:layout_marginStart="15dp"
+                    android:layout_marginEnd="15dp"
+                    android:layout_marginTop="10dp"
+                    android:textColor="#000000"
+                    android:textSize="8pt" />
+            </RelativeLayout>
         </ScrollView>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
 
 </FrameLayout>

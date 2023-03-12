@@ -1,26 +1,141 @@
 package com.example.rsa_android.fragment
 
-import android.Manifest
+import android.annotation.SuppressLint
+import android.app.Activity
+import android.app.Dialog
+import android.content.Context
+import android.content.Intent
+import android.os.Build
 import android.os.Bundle
+import android.os.Environment
 import android.text.TextUtils
+import android.util.Log
 import android.view.*
-import android.widget.Toast
+import android.widget.*
+import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import com.example.rsa_android.R
+import com.example.rsa_android.RSA
+import com.example.rsa_android.Utils.MyFile
+import com.example.rsa_android.databinding.FragmentGenerateKeyBinding
+import java.math.BigInteger
 
+const val FILE_KEY_STORE = "FILE_KEY_STORE.txt"
+private const val REQUEST_CODE_EXPORT_PUBLIC_KEY = 1
+private const val REQUEST_CODE_EXPORT_PRIVATE_KEY = 2
 
 class GenerateKeyFragment : Fragment() {
+    var numBit: Int = 64
+    private var _binding: FragmentGenerateKeyBinding? = null
+    private val binding get() = _binding!!
+    lateinit var rsa: RSA
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_generate_key, container, false)
+    ): View {
+        _binding = FragmentGenerateKeyBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        val btnGenerateKey = binding.generateKeyButton
+        val edtP = binding.pNumberEditText
+        val edtQ = binding.qNumberEditText
+        val tvN = binding.nNumberTextView
+        val tvPhi = binding.phiNNumberTextView
+        val tvE = binding.eNumberTextView
+        val tvD = binding.dNumberTextView
+        val tvEN = binding.publicKeyTextView
+        val tvDN = binding.privateKeyTextView
+
+        val radioGroup = binding.radioGroup
+        val radioBtn64 = binding.radio64bits
+        val radioBtn128 = binding.radio128bits
+        val radioBtn256 = binding.radio256bits
+        val radioBtn512 = binding.radio512bits
+        val radioBtn1024 = binding.radio1024bits
+
+        radioGroup.setOnCheckedChangeListener { _, p1 ->
+            when (p1) {
+                R.id.radio_64bits -> {
+                    radioBtn64.isChecked = true
+                    numBit = 64
+                    Log.d("aa", radioBtn64.text.toString())
+                }
+                R.id.radio_128bits -> {
+                    radioBtn128.isChecked = true
+                    numBit = 128
+                    Log.d("GEN", radioBtn128.text.toString())
+                }
+                R.id.radio_256bits -> {
+                    radioBtn256.isChecked = true
+                    numBit = 256
+                    Log.d("GEN", radioBtn256.text.toString())
+                }
+                R.id.radio_512bits -> {
+                    radioBtn512.isChecked = true
+                    numBit = 512
+                    Log.d("GEN", radioBtn512.text.toString())
+                }
+                R.id.radio_1024bits -> {
+                    radioBtn1024.isChecked = true
+                    numBit = 1024
+                    Log.d("GEN", radioBtn1024.text.toString())
+                }
+            }
+        }
+        rsa = RSA()
+
+        btnGenerateKey.setOnClickListener {
+            Log.d("GENERATE", "btn generate clicked")
+            var p: BigInteger?
+            var q: BigInteger?
+            var n: BigInteger?
+            var phi: BigInteger?
+            var e: BigInteger?
+            var d: BigInteger?
+
+            do {
+                // 1. Find large primes p and q
+                p = rsa.largePrime(numBit)!!
+                q = rsa.largePrime(numBit)!!
+
+                // 2. Compute n from p and q
+                // n is mod for private & public keys, n bit length is key length
+                n = rsa.n(p, q)!!
+
+                // 3. Compute Phi(n) (Euler's totient function)
+                // Phi(n) = (p-1)(q-1)
+                // BigIntegers are objects and must use methods for algebraic operations
+                phi = rsa.getPhi(p, q)!!
+
+                // 4. Find an int e such that 1 < e < Phi(n) 	and gcd(e,Phi) = 1
+                e = rsa.genE(phi, numBit)
+
+                // 5. Calculate d where  d ≡ e^(-1) (mod Phi(n))
+                d = rsa.extEuclid(e, phi)[1]
+                val boolean: Boolean = (d > BigInteger.ZERO)
+                Log.d("TEST", boolean.toString())
+            } while (!boolean)
+
+            edtP.text = p.toString()
+            edtQ.text = q.toString()
+            tvN.text = n.toString()
+            tvPhi.text = phi.toString()
+            tvE.text = e.toString()
+            tvD.text = d.toString()
+            tvEN.text = "($e, $n)"
+            tvDN.text = "($d, $n)"
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -30,41 +145,134 @@ class GenerateKeyFragment : Fragment() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-//            R.id.autoGeneKeyGeneOptionMenu -> autoGenerateKey()
-//            R.id.saveKeyGeneOptionMenu -> requestPermissions(
-//                arrayOf(
-//                    Manifest.permission.READ_EXTERNAL_STORAGE,
-//                    Manifest.permission.WRITE_EXTERNAL_STORAGE
-//                )
-//            )
-//            R.id.exportPubKeyGeneOptionMenu -> {
-//                if (TextUtils.isEmpty(txtN.getText().toString()) || TextUtils.isEmpty(
-//                        txtE.getText().toString()
-//                    )
-//                ) {
-//                    Toast.makeText(context, "Public key is empty", Toast.LENGTH_SHORT).show()
-//                    break
-//                }
-//                showExportDialog(
-//                    "Export public key file",
-//                    GenerateKeyFragment.REQUEST_CODE_EXPORT_PUBLIC_KEY
-//                )
-//            }
-//            R.id.exportPriKeyGeneOptionMenu -> {
-//                if (TextUtils.isEmpty(txtN.getText().toString()) || TextUtils.isEmpty(
-//                        txtD.getText().toString()
-//                    )
-//                ) {
-//                    Toast.makeText(context, "Private key is empty", Toast.LENGTH_SHORT).show()
-//                    break
-//                }
-//                showExportDialog(
-//                    "Export private key file",
-//                    GenerateKeyFragment.REQUEST_CODE_EXPORT_PRIVATE_KEY
-//                )
-//            }
+            R.id.saveKeyGeneOptionMenu -> {
+                if (binding.qNumberEditText.text.equals("")) {
+                    Toast.makeText(context, "Please press GENERATE KEY button", Toast.LENGTH_SHORT)
+                        .show()
+
+                } else {
+                    val myFile = MyFile()
+                    myFile.saveKey(
+                        requireContext(),
+                        FILE_KEY_STORE,
+                        binding.nNumberTextView.text.toString(),
+                        binding.eNumberTextView.text.toString(),
+                        binding.dNumberTextView.text.toString()
+                    )
+                }
+
+            }
+
+            R.id.exportPubKeyGeneOptionMenu -> {
+
+                if (binding.qNumberEditText.text.equals("")) {
+                    Toast.makeText(context, "Please press GENERATE KEY button", Toast.LENGTH_SHORT)
+                        .show()
+
+                } else {
+                    showExportDialog(
+                        "Export public key file)",
+                        REQUEST_CODE_EXPORT_PUBLIC_KEY,
+                        requireContext()
+                    )
+                }
+
+
+            }
+            R.id.exportPriKeyGeneOptionMenu -> {
+                if (binding.qNumberEditText.text.equals("")) {
+                    Toast.makeText(context, "Please press GENERATE KEY button", Toast.LENGTH_SHORT)
+                        .show()
+
+                } else {
+                    showExportDialog(
+                        "Export private key file", REQUEST_CODE_EXPORT_PRIVATE_KEY, requireContext()
+                    )
+                }
+            }
         }
         return super.onOptionsItemSelected(item)
     }
 
+
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
+    }
+
+    private fun showExportDialog(title: String, requestCode: Int, context: Context) {
+        val dialog = Dialog(context)
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.setContentView(R.layout.export_file_text_dialog)
+        dialog.window!!.setLayout(
+            WindowManager.LayoutParams.MATCH_PARENT,
+            WindowManager.LayoutParams.WRAP_CONTENT
+        )
+        dialog.setCanceledOnTouchOutside(true)
+        val titleTV: TextView = dialog.findViewById(R.id.titleExportDialogTextView)
+        titleTV.text = title
+        val btnClose: ImageView = dialog.findViewById(R.id.closeExportDialogImageView)
+        val edtFileNameDialog: EditText = dialog.findViewById(R.id.fileNameExportEditText)
+        val edtFilePathDialog: EditText = dialog.findViewById(R.id.filePathExportEditText)
+        val btnSave: Button = dialog.findViewById(R.id.saveTextFileExportButton)
+        val folder =
+            Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS)
+
+        edtFilePathDialog.setText(folder.toString(), TextView.BufferType.EDITABLE)
+
+        btnClose.setOnClickListener(object : View.OnClickListener {
+            override fun onClick(v: View?) {
+                dialog.dismiss()
+            }
+        })
+
+        btnSave.setOnClickListener(object : View.OnClickListener {
+            @RequiresApi(Build.VERSION_CODES.R)
+            override fun onClick(v: View?) {
+
+                if (TextUtils.isEmpty(edtFileNameDialog.getText().toString())) {
+                    Toast.makeText(context, "File name is empty", Toast.LENGTH_SHORT).show()
+                    return
+                }
+
+                var fileName: String = edtFileNameDialog.getText().toString()
+                val arr = fileName.split("\\.").toTypedArray()
+                if (arr.size == 1) fileName += ".txt"
+
+                var key = ""
+                key = if (requestCode == REQUEST_CODE_EXPORT_PUBLIC_KEY) {
+                    binding.eNumberTextView.text.toString()
+                } else {
+                    binding.dNumberTextView.text.toString()
+                }
+                val myFile = MyFile()
+
+                myFile.exportGenerateKey(
+                    context,
+                    folder!!,
+                    fileName,
+                    key,
+                    binding.nNumberTextView.text.toString()
+                )
+                dialog.dismiss()
+            }
+        })
+        dialog.show()
+    }
+
+    override fun onActivityResult(
+        requestCode: Int, resultCode: Int, resultData: Intent?
+    ) {
+        if (requestCode == REQUEST_CODE_EXPORT_PUBLIC_KEY
+            && resultCode == Activity.RESULT_OK
+        ) {
+            // The result data contains a URI for the document or directory that
+            // the user selected.
+            resultData?.data?.also { uri ->
+                Log.d("URI", uri.path.toString())
+                Log.d("URI", resultData.data.toString())
+                // Perform operations on the document using its URI.
+            }
+        }
+    }
 }

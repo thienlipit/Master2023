@@ -57,13 +57,13 @@ class RSA {
      */
     fun genE(phi: BigInteger, numBit: Int): BigInteger {
         val rand = Random()
-        var e = BigInteger(1024, rand)
+        var e: BigInteger? = null
         do {
             e = BigInteger(numBit * 2, rand)
-            while (e.min(phi) == phi) { // while phi is smaller than e, look for a new e
+            while (e!!.min(phi) == phi && e > BigInteger.ONE) { // while phi is smaller than e, look for a new e
                 e = BigInteger(numBit * 2, rand)
             }
-        } while (gcd(e, phi) != BigInteger.ONE) // if gcd(e,phi) isnt 1 then stay in loop
+        } while (gcd(e!!, phi) != BigInteger.ONE) // if gcd(e,phi) isnt 1 then stay in loop
         return e
     }
 

@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item
-        android:id="@+id/autoGeneKeyGeneOptionMenu"
-        android:title="Auto generate key"/>
+<!--    <item-->
+<!--        android:id="@+id/autoGeneKeyGeneOptionMenu"-->
+<!--        android:title="Auto generate key"/>-->
     <item
         android:id="@+id/saveKeyGeneOptionMenu"
-        android:title="Save key"/>
+        android:title="Save Generate Key"/>
     <item
         android:id="@+id/exportPubKeyGeneOptionMenu"
         android:title="Save public key"/>

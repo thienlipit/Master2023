@@ -9,7 +9,4 @@
     <item
         android:id="@+id/loadEncryptedTextDecOptionMenu"
         android:title="Load encrypted text"/>
-    <item
-        android:id="@+id/exportPlainTextDecOptionMenu"
-        android:title="Export plain text"/>
 </menu>
