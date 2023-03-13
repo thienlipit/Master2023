@@ -2,22 +2,19 @@ package com.example.rsa_android.fragment
 
 import android.annotation.SuppressLint
 import android.app.Activity
-import android.app.Dialog
-import android.content.Context
 import android.content.Intent
-import android.os.Build
 import android.os.Bundle
-import android.os.Environment
 import android.view.*
-import android.widget.*
+import android.widget.TextView
+import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
+import com.example.rsa_android.LOAD_ENCRYPTED_TEXT
+import com.example.rsa_android.LOAD_OTHER_PRIVATE_KEY
 import com.example.rsa_android.R
 import com.example.rsa_android.RSA
 import com.example.rsa_android.Utils.MyFile
 import com.example.rsa_android.databinding.FragmentDecryptBinding
-import java.io.*
 import java.math.BigInteger
 
 class DecryptFragment : Fragment() {
@@ -47,6 +44,7 @@ class DecryptFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         val edtD = binding.dNumberEditText
         val edtN = binding.nNumberEditText
+        val edtEncryptedText = binding.encryptedTextEditText
         val edtPlainText = binding.plainTextEditText
         val btnDecrypt = binding.decryptButton
         btnDecrypt.setOnClickListener {
@@ -54,10 +52,14 @@ class DecryptFragment : Fragment() {
             if (edtD.text.isNullOrEmpty() || edtN.text.isNullOrEmpty()) {
                 Toast.makeText(context, "Please Load private key", Toast.LENGTH_SHORT).show()
             } else {
-                edtPlainText.setText(
-                    rsa.decrypt(listEncryptBigInteger, encryptD, encryptN),
-                    TextView.BufferType.EDITABLE
-                )
+                if(edtEncryptedText.text.isNullOrEmpty()){
+                    Toast.makeText(context, "Please Load encrypted text", Toast.LENGTH_SHORT).show()
+                } else{
+                    edtPlainText.setText(
+                        rsa.decrypt(listEncryptBigInteger, encryptD, encryptN),
+                        TextView.BufferType.EDITABLE
+                    )
+                }
             }
         }
     }
@@ -80,8 +82,15 @@ class DecryptFragment : Fragment() {
                 edtD.setText(d.toString(), TextView.BufferType.EDITABLE)
                 edtN.setText(n.toString(), TextView.BufferType.EDITABLE)
             }
+            R.id.loadOtherPrivateKeyOptionMenu -> {
+                val dialogFileChoose = DialogFileChoose("Load other private key", requireContext(), null,
+                    resultLauncherLoadOtherPrivateKey, LOAD_OTHER_PRIVATE_KEY, requireView())
+                dialogFileChoose.showExportDialog()
+            }
             R.id.loadEncryptedTextDecOptionMenu -> {
-                showExportDialog("Load Encrypted Text", requireContext())
+                val dialogFileChoose = DialogFileChoose("Load Encrypted Text", requireContext(), null,
+                    resultLauncher, LOAD_ENCRYPTED_TEXT, requireView())
+                dialogFileChoose.showExportDialog()
             }
         }
         return super.onOptionsItemSelected(item)
@@ -92,47 +101,26 @@ class DecryptFragment : Fragment() {
         _binding = null
     }
 
-    private fun showExportDialog(title: String, context: Context) {
-        val dialog = Dialog(context)
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
-        dialog.setContentView(R.layout.export_file_text_dialog)
-        dialog.window!!.setLayout(
-            WindowManager.LayoutParams.MATCH_PARENT,
-            WindowManager.LayoutParams.WRAP_CONTENT
-        )
-        dialog.setCanceledOnTouchOutside(true)
-        val titleTV: TextView = dialog.findViewById(R.id.titleExportDialogTextView)
-        titleTV.text = title
-        val btnClose: ImageView = dialog.findViewById(R.id.closeExportDialogImageView)
-        val edtFileNameDialog: EditText = dialog.findViewById(R.id.fileNameExportEditText)
-        val tvFileNameDialog: TextView = dialog.findViewById(R.id.textView2)
-        val edtFilePathDialog: EditText = dialog.findViewById(R.id.filePathExportEditText)
-        val btnSave: Button = dialog.findViewById(R.id.saveTextFileExportButton)
+    @SuppressLint("SetTextI18n")
+    private var resultLauncherLoadOtherPrivateKey =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == Activity.RESULT_OK) {
+                val data: Intent? = result.data
+                val uri = data!!.data
+                if (uri != null) {
+                    val myFile = MyFile()
+                    val (d, n) = myFile.loadOtherPublicKeyFile(requireContext(), uri)
+                    val edtD = binding.dNumberEditText
+                    val edtN = binding.nNumberEditText
+                    encryptD = d
+                    encryptN = n
 
-        edtFileNameDialog.visibility = View.GONE
-        tvFileNameDialog.visibility = View.GONE
-        btnSave.text = "Open Folder"
+                    edtD.setText(d.toString(), TextView.BufferType.EDITABLE)
+                    edtN.setText(n.toString(), TextView.BufferType.EDITABLE)
 
-        val folder = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS)
-        edtFilePathDialog.setText(folder.toString(), TextView.BufferType.EDITABLE)
-
-        btnClose.setOnClickListener(object : View.OnClickListener {
-            override fun onClick(v: View?) {
-                dialog.dismiss()
+                }
             }
-        })
-
-        btnSave.setOnClickListener(object : View.OnClickListener {
-            @RequiresApi(Build.VERSION_CODES.R)
-            override fun onClick(v: View?) {
-                val intent = Intent(Intent.ACTION_GET_CONTENT)
-                intent.type = "text/plain"
-                resultLauncher.launch(intent)
-                dialog.dismiss()
-            }
-        })
-        dialog.show()
-    }
+        }
 
     var resultLauncher =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->

@@ -1,295 +1,311 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".fragment.GenerateKeyFragment">
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <data>
+        <import type="com.example.rsa_android.Utils.ClipboardUtils" />
+    </data>
+
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <RadioGroup
-            android:id="@+id/radioGroup"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:orientation="horizontal">
-            <RadioButton android:id="@+id/radio_64bits"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="64 bit"
-                android:checked="true"
-                android:textColor="#FFFFFF" />
-            <RadioButton android:id="@+id/radio_128bits"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="128 bit"
-                android:textColor="#FFFFFF" />
-            <RadioButton android:id="@+id/radio_256bits"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="256 bit"
-                android:textColor="#FFFFFF" />
-            <RadioButton android:id="@+id/radio_512bits"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="512 bit"
-                android:textColor="#FFFFFF" />
-            <RadioButton android:id="@+id/radio_1024bits"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="1024 bit"
-                android:textColor="#FFFFFF" />
-        </RadioGroup>
-
-        <LinearLayout
-            android:id="@+id/linearLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="10dp"
-            android:orientation="vertical"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/radioGroup"
-            android:focusable="true"
-            android:focusableInTouchMode="true">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="10dp"
-                android:background="@drawable/round_shape"
-                android:orientation="horizontal"
-                android:paddingHorizontal="10dp"
-                android:paddingVertical="5dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="P: "
-
-                    android:textColor="#09165E"
-                    android:textSize="8pt"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/pNumberEditText"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textColor="#000000" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_marginTop="10dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="10dp"
-                android:layout_weight="1"
-                android:background="@drawable/round_shape"
-                android:orientation="horizontal"
-                android:paddingHorizontal="10dp"
-                android:paddingVertical="5dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Q: "
-                    android:textColor="#09165E"
-                    android:textSize="8pt"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/qNumberEditText"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textColor="#000000" />
-            </LinearLayout>
-        </LinearLayout>
-
-        <Button
-            android:id="@+id/generateKeyButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="20dp"
-            android:layout_marginTop="12dp"
-            android:background="#001C9F"
-            android:text="Generate key"
-            android:textColor="#FFFFFF"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
+        android:layout_height="match_parent"
+        tools:context=".fragment.GenerateKeyFragment">
 
         <ScrollView
-            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/generateKeyButton">
+            android:layout_height="wrap_content">
+
             <RelativeLayout
+                android:layout_marginVertical="10dp"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="10dp"
-                android:background="@drawable/round_shape"
-                android:paddingBottom="20dp">
+                android:layout_height="wrap_content">
 
-                <TextView
-                    android:id="@+id/textView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginTop="20dp"
-                    android:text="N : "
-                    android:textColor="#09165E"
-                    android:textSize="8pt"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:layout_toEndOf="@+id/textView"
-                    android:id="@+id/nNumberTextView"
+                <RadioGroup
+                    android:id="@+id/radioGroup"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="15dp"
-                    android:layout_marginStart="15dp"
-                    android:layout_marginTop="10dp"
-                    android:hint="443214321u4321"
-                    android:textColor="#000000"
-                    android:textSize="8pt"
-                    android:scrollbars = "horizontal" />
+                    android:gravity="center"
+                    android:orientation="horizontal">
 
-                <TextView
-                    android:layout_below="@id/nNumberTextView"
-                    android:id="@+id/textView3"
-                    android:layout_width="wrap_content"
+                    <RadioButton
+                        android:id="@+id/radio_64bits"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:checked="true"
+                        android:text="64 bit"
+                        android:textColor="#FFFFFF" />
+
+                    <RadioButton
+                        android:id="@+id/radio_128bits"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="128 bit"
+                        android:textColor="#FFFFFF" />
+
+                    <RadioButton
+                        android:id="@+id/radio_256bits"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="256 bit"
+                        android:textColor="#FFFFFF" />
+
+                    <RadioButton
+                        android:id="@+id/radio_512bits"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="512 bit"
+                        android:textColor="#FFFFFF" />
+
+                    <RadioButton
+                        android:id="@+id/radio_1024bits"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="1024 bit"
+                        android:textColor="#FFFFFF" />
+                </RadioGroup>
+
+
+                <LinearLayout
+                    android:id="@+id/linearLayout"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="20dp"
+                    android:layout_below="@+id/radioGroup"
+                    android:layout_marginHorizontal="10dp"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="10dp"
+                        android:background="@drawable/round_shape"
+                        android:orientation="horizontal"
+                        android:paddingHorizontal="10dp"
+                        android:paddingVertical="5dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="P: "
+
+                            android:textColor="#09165E"
+                            android:textSize="8pt"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/pNumberEditText"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textColor="#000000"
+                            android:contentDescription="P number"
+                            android:onClick="@{ClipboardUtils::copyTextView}" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="10dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/round_shape"
+                        android:orientation="horizontal"
+                        android:paddingHorizontal="10dp"
+                        android:paddingVertical="5dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Q: "
+                            android:textColor="#09165E"
+                            android:textSize="8pt"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/qNumberEditText"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:contentDescription="Q number"
+                            android:onClick="@{ClipboardUtils::copyTextView}"
+                            android:textColor="#000000" />
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/linearLayout"
+                    android:layout_marginHorizontal="10dp"
                     android:layout_marginTop="12dp"
-                    android:text="Phi:  "
-                    android:textColor="#09165E"
-                    android:textSize="8pt"
-                    android:textStyle="bold" />
+                    android:background="@drawable/round_shape"
+                    android:paddingBottom="5dp">
 
-                <TextView
-                    android:layout_below="@+id/nNumberTextView"
-                    android:layout_toEndOf="@id/textView3"
-                    android:id="@+id/phiNNumberTextView"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="15dp"
-                    android:layout_marginTop="10dp"
-                    android:textColor="#000000"
-                    android:textSize="8pt"
-                    android:hint="123456789"
-                    android:scrollbars = "vertical" />
+                    <TextView
+                        android:id="@+id/textView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginTop="10dp"
+                        android:text="N : "
+                        android:textColor="#09165E"
+                        android:textSize="8pt"
+                        android:textStyle="bold" />
 
-                <TextView
-                    android:layout_below="@id/phiNNumberTextView"
-                    android:id="@+id/textView4"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginTop="12dp"
-                    android:text="E : "
-                    android:textColor="#09165E"
-                    android:textSize="8pt"
-                    android:textStyle="bold" />
+                    <TextView
+                        android:id="@+id/nNumberTextView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="15dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginEnd="15dp"
+                        android:layout_toEndOf="@+id/textView"
+                        android:scrollbars="horizontal"
+                        android:textColor="#000000"
+                        android:contentDescription="N number"
+                        android:onClick="@{ClipboardUtils::copyTextView}"
+                        android:textSize="8pt" />
 
-                <TextView
-                    android:layout_below="@id/phiNNumberTextView"
-                    android:layout_toEndOf="@id/textView4"
-                    android:id="@+id/eNumberTextView"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="15dp"
-                    android:layout_marginEnd="15dp"
-                    android:hint="123456789"
-                    android:layout_marginTop="10dp"
-                    android:textColor="#000000"
-                    android:textSize="8pt" />
+                    <TextView
+                        android:id="@+id/textView3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/nNumberTextView"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginTop="12dp"
+                        android:text="Phi:  "
+                        android:textColor="#09165E"
+                        android:textSize="8pt"
+                        android:textStyle="bold" />
 
-                <TextView
-                    android:layout_below="@+id/eNumberTextView"
-                    android:id="@+id/textView5"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginTop="12dp"
-                    android:text="D : "
-                    android:textColor="#09165E"
-                    android:textSize="8pt"
-                    android:textStyle="bold" />
+                    <TextView
+                        android:id="@+id/phiNNumberTextView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/nNumberTextView"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginEnd="15dp"
+                        android:layout_toEndOf="@id/textView3"
+                        android:scrollbars="vertical"
+                        android:textColor="#000000"
+                        android:textSize="8pt" />
 
-                <TextView
-                    android:layout_toEndOf="@id/textView5"
-                    android:layout_below="@id/eNumberTextView"
-                    android:id="@+id/dNumberTextView"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="15dp"
-                    android:layout_marginEnd="15dp"
-                    android:layout_marginTop="10dp"
-                    android:textColor="#000000"
-                    android:textSize="8pt" />
+                    <TextView
+                        android:id="@+id/textView4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/phiNNumberTextView"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginTop="12dp"
+                        android:text="E : "
+                        android:textColor="#09165E"
+                        android:textSize="8pt"
+                        android:textStyle="bold" />
 
-                <TextView
-                    android:layout_below="@+id/dNumberTextView"
-                    android:id="@+id/textView6"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginTop="12dp"
-                    android:text="Public key ( E , N ) : "
-                    android:textColor="#09165E"
-                    android:textSize="8pt"
-                    android:textStyle="bold" />
+                    <TextView
+                        android:id="@+id/eNumberTextView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/phiNNumberTextView"
+                        android:layout_marginStart="15dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginEnd="15dp"
+                        android:layout_toEndOf="@id/textView4"
+                        android:textColor="#000000"
+                        android:contentDescription="E number"
+                        android:onClick="@{ClipboardUtils::copyTextView}"
+                        android:textSize="8pt" />
 
-                <TextView
-                    android:layout_below="@id/textView6"
-                    android:id="@+id/publicKeyTextView"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginStart="15dp"
-                    android:layout_marginEnd="15dp"
-                    android:textColor="#000000"
-                    android:textSize="8pt"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.0"
-                    app:layout_constraintStart_toEndOf="@+id/textView6"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    <TextView
+                        android:id="@+id/textView5"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/eNumberTextView"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginTop="12dp"
+                        android:text="D : "
+                        android:textColor="#09165E"
+                        android:textSize="8pt"
+                        android:textStyle="bold" />
 
-                <TextView
-                    android:layout_below="@+id/publicKeyTextView"
-                    android:id="@+id/textView7"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginTop="12dp"
-                    android:text="Private key ( D , N ) : "
-                    android:textColor="#09165E"
-                    android:textSize="8pt"
-                    android:textStyle="bold" />
+                    <TextView
+                        android:id="@+id/dNumberTextView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/eNumberTextView"
+                        android:layout_marginStart="15dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginEnd="15dp"
+                        android:layout_toEndOf="@id/textView5"
+                        android:contentDescription="D number"
+                        android:onClick="@{ClipboardUtils::copyTextView}"
+                        android:textColor="#000000"
+                        android:textSize="8pt" />
 
-                <TextView
-                    android:layout_below="@id/textView7"
-                    android:id="@+id/privateKeyTextView"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="15dp"
-                    android:layout_marginEnd="15dp"
-                    android:layout_marginTop="10dp"
-                    android:textColor="#000000"
-                    android:textSize="8pt" />
+                    <TextView
+                        android:id="@+id/textView6"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/dNumberTextView"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginTop="12dp"
+                        android:text="Public key ( E , N ) : "
+                        android:textColor="#09165E"
+                        android:textSize="8pt"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/publicKeyTextView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/textView6"
+                        android:layout_marginStart="15dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginEnd="15dp"
+                        android:textColor="#000000"
+                        android:textSize="8pt" />
+
+                    <TextView
+                        android:id="@+id/textView7"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/publicKeyTextView"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginTop="12dp"
+                        android:text="Private key ( D , N ) : "
+                        android:textColor="#09165E"
+                        android:textSize="8pt"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/privateKeyTextView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/textView7"
+                        android:layout_marginStart="15dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginEnd="15dp"
+                        android:textColor="#000000"
+                        android:textSize="8pt" />
+
+                    <Button
+                        android:id="@+id/generateKeyButton"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/privateKeyTextView"
+                        android:layout_marginHorizontal="12dp"
+                        android:layout_marginVertical="12dp"
+                        android:background="#001C9F"
+                        android:text="Generate key"
+                        android:textColor="#FFFFFF"
+                        android:textStyle="bold" />
+
+                </RelativeLayout>
+
             </RelativeLayout>
         </ScrollView>
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-</FrameLayout>
+    </FrameLayout>
+</layout>

@@ -36,8 +36,32 @@ class MyFile {
             }
             return Triple(n, eNum, dNum)
         }
-//        return  Triple(n, eNum, dNum)
+    }
 
+    fun loadOtherPublicKeyFile(context: Context, uri: Uri): List<BigInteger> {
+        var reader: BufferedReader? = null
+        val numbers = mutableListOf<BigInteger>()
+        try {
+            val inputStream: InputStream? = context.contentResolver?.openInputStream(uri)
+            reader = BufferedReader(InputStreamReader(inputStream))
+            var line: String? = reader.readLine()
+            while (line != null) {
+                numbers.add(BigInteger(line))
+                line = reader.readLine()
+            }
+
+        } catch (e: FileNotFoundException) {
+            e.printStackTrace()
+            Toast.makeText(context, "Not found file", Toast.LENGTH_SHORT).show()
+        } catch (e: IOException) {
+            e.printStackTrace()
+        } catch (e: Exception) {
+            e.printStackTrace()
+        } finally {
+            reader!!.close()
+            Toast.makeText(context, "Load successfully", Toast.LENGTH_SHORT).show()
+            return numbers
+        }
     }
 
     fun saveKey(context: Context, fileName: String?, n: String?, eNum: String?, dNum: String?) {

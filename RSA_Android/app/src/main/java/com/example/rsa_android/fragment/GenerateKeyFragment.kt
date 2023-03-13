@@ -1,28 +1,21 @@
 package com.example.rsa_android.fragment
 
 import android.annotation.SuppressLint
-import android.app.Activity
-import android.app.Dialog
-import android.content.Context
-import android.content.Intent
-import android.os.Build
 import android.os.Bundle
-import android.os.Environment
-import android.text.TextUtils
 import android.util.Log
 import android.view.*
-import android.widget.*
-import androidx.annotation.RequiresApi
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.example.rsa_android.R
 import com.example.rsa_android.RSA
+import com.example.rsa_android.SAVE_PRIVATE_KEY
+import com.example.rsa_android.SAVE_PUBLIC_KEY
 import com.example.rsa_android.Utils.MyFile
 import com.example.rsa_android.databinding.FragmentGenerateKeyBinding
 import java.math.BigInteger
 
+
 const val FILE_KEY_STORE = "FILE_KEY_STORE.txt"
-private const val REQUEST_CODE_EXPORT_PUBLIC_KEY = 1
-private const val REQUEST_CODE_EXPORT_PRIVATE_KEY = 2
 
 class GenerateKeyFragment : Fragment() {
     var numBit: Int = 64
@@ -46,7 +39,6 @@ class GenerateKeyFragment : Fragment() {
     @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         val btnGenerateKey = binding.generateKeyButton
         val edtP = binding.pNumberEditText
         val edtQ = binding.qNumberEditText
@@ -160,7 +152,6 @@ class GenerateKeyFragment : Fragment() {
                         binding.dNumberTextView.text.toString()
                     )
                 }
-
             }
 
             R.id.exportPubKeyGeneOptionMenu -> {
@@ -170,13 +161,11 @@ class GenerateKeyFragment : Fragment() {
                         .show()
 
                 } else {
-                    showExportDialog(
-                        "Export public key file)",
-                        REQUEST_CODE_EXPORT_PUBLIC_KEY,
-                        requireContext()
-                    )
-                }
+                    val dialogFileChoose = DialogFileChoose("Export public key file", requireContext(), null,
+                        null, SAVE_PUBLIC_KEY, requireView())
+                    dialogFileChoose.showExportDialog()
 
+                }
 
             }
             R.id.exportPriKeyGeneOptionMenu -> {
@@ -185,94 +174,19 @@ class GenerateKeyFragment : Fragment() {
                         .show()
 
                 } else {
-                    showExportDialog(
-                        "Export private key file", REQUEST_CODE_EXPORT_PRIVATE_KEY, requireContext()
-                    )
+                    val dialogFileChoose = DialogFileChoose("Export private key file", requireContext(), null,
+                        null, SAVE_PRIVATE_KEY, requireView())
+                    dialogFileChoose.showExportDialog()
+
                 }
             }
         }
         return super.onOptionsItemSelected(item)
     }
 
-
     override fun onDestroy() {
         super.onDestroy()
         _binding = null
     }
 
-    private fun showExportDialog(title: String, requestCode: Int, context: Context) {
-        val dialog = Dialog(context)
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
-        dialog.setContentView(R.layout.export_file_text_dialog)
-        dialog.window!!.setLayout(
-            WindowManager.LayoutParams.MATCH_PARENT,
-            WindowManager.LayoutParams.WRAP_CONTENT
-        )
-        dialog.setCanceledOnTouchOutside(true)
-        val titleTV: TextView = dialog.findViewById(R.id.titleExportDialogTextView)
-        titleTV.text = title
-        val btnClose: ImageView = dialog.findViewById(R.id.closeExportDialogImageView)
-        val edtFileNameDialog: EditText = dialog.findViewById(R.id.fileNameExportEditText)
-        val edtFilePathDialog: EditText = dialog.findViewById(R.id.filePathExportEditText)
-        val btnSave: Button = dialog.findViewById(R.id.saveTextFileExportButton)
-        val folder =
-            Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS)
-
-        edtFilePathDialog.setText(folder.toString(), TextView.BufferType.EDITABLE)
-
-        btnClose.setOnClickListener(object : View.OnClickListener {
-            override fun onClick(v: View?) {
-                dialog.dismiss()
-            }
-        })
-
-        btnSave.setOnClickListener(object : View.OnClickListener {
-            @RequiresApi(Build.VERSION_CODES.R)
-            override fun onClick(v: View?) {
-
-                if (TextUtils.isEmpty(edtFileNameDialog.getText().toString())) {
-                    Toast.makeText(context, "File name is empty", Toast.LENGTH_SHORT).show()
-                    return
-                }
-
-                var fileName: String = edtFileNameDialog.getText().toString()
-                val arr = fileName.split("\\.").toTypedArray()
-                if (arr.size == 1) fileName += ".txt"
-
-                var key = ""
-                key = if (requestCode == REQUEST_CODE_EXPORT_PUBLIC_KEY) {
-                    binding.eNumberTextView.text.toString()
-                } else {
-                    binding.dNumberTextView.text.toString()
-                }
-                val myFile = MyFile()
-
-                myFile.exportGenerateKey(
-                    context,
-                    folder!!,
-                    fileName,
-                    key,
-                    binding.nNumberTextView.text.toString()
-                )
-                dialog.dismiss()
-            }
-        })
-        dialog.show()
-    }
-
-    override fun onActivityResult(
-        requestCode: Int, resultCode: Int, resultData: Intent?
-    ) {
-        if (requestCode == REQUEST_CODE_EXPORT_PUBLIC_KEY
-            && resultCode == Activity.RESULT_OK
-        ) {
-            // The result data contains a URI for the document or directory that
-            // the user selected.
-            resultData?.data?.also { uri ->
-                Log.d("URI", uri.path.toString())
-                Log.d("URI", resultData.data.toString())
-                // Perform operations on the document using its URI.
-            }
-        }
-    }
 }

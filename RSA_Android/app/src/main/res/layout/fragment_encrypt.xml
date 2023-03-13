@@ -1,176 +1,169 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".fragment.EncryptFragment">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <data>
+
+    </data>
+
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        tools:context=".fragment.EncryptFragment">
 
-        <TextView
-            android:id="@+id/textView6"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Public key ( E , N ) : "
-            android:textColor="#FFD400"
-            android:textSize="8pt"
-            android:textStyle="bold"
-            android:layout_marginTop="12dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:focusable="true"
-            android:focusableInTouchMode="true"/>
-
-        <LinearLayout
-            android:id="@+id/linearLayout"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="10dp"
+            android:layout_height="match_parent">
 
-            android:orientation="vertical"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView6">
-
-            <LinearLayout
-                android:layout_width="match_parent"
+            <TextView
+                android:id="@+id/textView6"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="10dp"
-                android:layout_weight="1"
-                android:background="@drawable/round_shape"
-                android:orientation="horizontal"
-                android:paddingHorizontal="10dp"
-                android:paddingVertical="5dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="E : "
-                    android:textColor="#09165E"
-                    android:textSize="8pt"
-                    android:textStyle="bold" />
-
-                <EditText
-                    android:id="@+id/eNumberEditText"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="number"
-                    android:textColor="#000000"
-                    android:singleLine="true" />
-            </LinearLayout>
+                android:text="Public key ( E , N ) : "
+                android:textColor="#5FB3F6"
+                android:textSize="8pt"
+                android:textStyle="bold"
+                android:layout_marginTop="5dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:focusable="true"
+                android:focusableInTouchMode="true" />
 
             <LinearLayout
                 android:layout_marginTop="5dp"
+                android:id="@+id/linearLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="10dp"
-                android:layout_weight="1"
-                android:background="@drawable/round_shape"
-                android:orientation="horizontal"
-                android:paddingHorizontal="10dp"
-                android:paddingVertical="5dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="N : "
-                    android:textColor="#09165E"
-                    android:textSize="8pt"
-                    android:textStyle="bold" />
-
-                <EditText
-                    android:id="@+id/nNumberEditText"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="number"
-                    android:textColor="#000000"
-                    android:singleLine="true" />
-            </LinearLayout>
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/linearLayout2"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_marginTop="10dp"
-            android:orientation="vertical"
-            app:layout_constraintBottom_toTopOf="@+id/encryptButton"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/linearLayout">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="10dp"
-                android:layout_weight="1"
                 android:orientation="vertical"
-                android:paddingHorizontal="10dp"
-                android:paddingVertical="15dp"
-                android:background="@drawable/round_shape">
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView6">
 
-                <TextView
+                <com.google.android.material.textfield.TextInputLayout
+                    app:hintTextColor="@color/black"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Plain text : "
-                    android:textColor="#09165E"
-                    android:textSize="8pt"
-                    android:textStyle="bold" />
+                    app:boxStrokeWidth="0dp"
+                    app:boxStrokeWidthFocused="0dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:background="@drawable/round_shape"
+                        android:id="@+id/eNumberEditText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/black"
+                        android:hint="e value:"
+                        android:inputType="number"
+                        android:imeOptions="actionDone"
+                        tools:ignore="RtlSymmetry" />
+                </com.google.android.material.textfield.TextInputLayout>
 
-                <EditText
-                    android:id="@+id/plainTextEditText"
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_marginTop="5dp"
+                    app:hintTextColor="@color/black"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
+                    app:boxStrokeWidth="0dp"
+                    app:boxStrokeWidthFocused="0dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
 
-                    android:textColor="#000000"
-                    android:imeOptions="actionDone" />
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:background="@drawable/round_shape"
+                        android:id="@+id/nNumberEditText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/black"
+                        android:hint="n value:"
+                        android:inputType="number"
+                        android:imeOptions="actionDone"
+                        tools:ignore="RtlSymmetry" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/linearLayout2"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="10dp"
-                android:layout_marginVertical="10dp"
-                android:layout_weight="1"
+                android:layout_height="0dp"
+                android:layout_marginTop="10dp"
                 android:orientation="vertical"
-                android:paddingHorizontal="10dp"
-                android:paddingVertical="15dp"
-                android:background="@drawable/round_shape">
+                app:layout_constraintBottom_toTopOf="@+id/encryptButton"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/linearLayout">
 
-                <TextView
+                <com.google.android.material.textfield.TextInputLayout
+                    app:hintTextColor="@color/black"
+                    android:paddingHorizontal="10dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Encypted text : "
-                    android:textColor="#09165E"
-                    android:textSize="8pt"
-                    android:textStyle="bold" />
+                    app:boxStrokeWidth="0dp"
+                    app:boxStrokeWidthFocused="0dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
 
-                <EditText
-                    android:id="@+id/encryptedTextEditText"
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:background="@drawable/round_shape"
+                        android:id="@+id/plainTextEditText"
+                        android:layout_width="match_parent"
+                        android:layout_height="200dp"
+                        android:textColor="@color/black"
+                        android:hint="Plain text:"
+                        android:inputType="textMultiLine"
+                        android:imeOptions="actionDone"
+                        android:gravity="top|left"
+                        tools:ignore="RtlSymmetry" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_marginTop="10dp"
+                    app:hintTextColor="@color/black"
+                    android:paddingHorizontal="10dp"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:inputType="textMultiLine"
-                    android:textColor="#000000"
-                    android:lineSpacingMultiplier="1.2"
-                    android:gravity="top|left"/>
+                    android:layout_height="wrap_content"
+                    app:boxStrokeWidth="0dp"
+                    app:boxStrokeWidthFocused="0dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:background="@drawable/round_shape"
+                        android:id="@+id/encryptedTextEditText"
+                        android:layout_width="match_parent"
+                        android:layout_height="200dp"
+                        android:textColor="@color/black"
+                        android:hint="Encrypted text:"
+                        android:inputType="textMultiLine"
+                        android:imeOptions="actionDone"
+                        android:gravity="top|left"
+                        tools:ignore="RtlSymmetry" />
+                </com.google.android.material.textfield.TextInputLayout>
+
             </LinearLayout>
-        </LinearLayout>
 
-        <Button
-            android:id="@+id/encryptButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="#001C9F"
-            android:text="Encrypt"
-            android:textColor="#FFFFFF"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <Button
+                android:id="@+id/encryptButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#001C9F"
+                android:text="Encrypt"
+                android:textColor="#FFFFFF"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
-</FrameLayout>
+    </FrameLayout>
+</layout>

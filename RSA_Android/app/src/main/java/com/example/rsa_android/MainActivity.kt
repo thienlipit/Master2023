@@ -14,6 +14,13 @@ import com.example.rsa_android.fragment.MyViewPager2Adapter
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
 
+const val SAVE_PUBLIC_KEY = 1
+const val SAVE_PRIVATE_KEY = 2
+const val LOAD_OTHER_PUBLIC_KEY = 3
+const val EXPORT_ENCRYPTED_TEXT = 4
+const val LOAD_OTHER_PRIVATE_KEY = 5
+const val LOAD_ENCRYPTED_TEXT = 6
+
 class MainActivity : AppCompatActivity() {
     private lateinit var toolbar: androidx.appcompat.widget.Toolbar
     private lateinit var binding: ActivityMainBinding
@@ -61,8 +68,6 @@ class MainActivity : AppCompatActivity() {
         myViewPager2Adapter = MyViewPager2Adapter(this)
 
         viewPager2.adapter = myViewPager2Adapter
-
-//        viewPager2.addOnPageChangeListener(TabLayoutOnPageChangeListener(tabLayout))
         setSupportActionBar(toolbar)
 
 
@@ -74,6 +79,8 @@ class MainActivity : AppCompatActivity() {
             override fun onTabUnselected(tab: TabLayout.Tab) {}
             override fun onTabReselected(tab: TabLayout.Tab) {}
         })
+
+        viewPager2.isUserInputEnabled = false
 
         viewPager2.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
@@ -102,5 +109,4 @@ class MainActivity : AppCompatActivity() {
             )
         }
     }
-
 }

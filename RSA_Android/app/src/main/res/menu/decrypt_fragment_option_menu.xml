@@ -4,7 +4,7 @@
         android:id="@+id/loadMyPriKeyDecOptionMenu"
         android:title="Load my private key"/>
     <item
-        android:id="@+id/loadOtherKeyPriDecOptionMenu"
+        android:id="@+id/loadOtherPrivateKeyOptionMenu"
         android:title="Load other's private key"/>
     <item
         android:id="@+id/loadEncryptedTextDecOptionMenu"

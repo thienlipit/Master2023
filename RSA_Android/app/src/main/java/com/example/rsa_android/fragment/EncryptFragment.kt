@@ -1,21 +1,20 @@
 package com.example.rsa_android.fragment
 
 import android.annotation.SuppressLint
-import android.app.Dialog
-import android.content.Context
-import android.os.Build
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
-import android.os.Environment
-import android.text.TextUtils
 import android.view.*
-import android.widget.*
-import androidx.annotation.RequiresApi
+import android.widget.TextView
+import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
+import com.example.rsa_android.EXPORT_ENCRYPTED_TEXT
+import com.example.rsa_android.LOAD_OTHER_PUBLIC_KEY
 import com.example.rsa_android.R
 import com.example.rsa_android.RSA
 import com.example.rsa_android.Utils.MyFile
 import com.example.rsa_android.databinding.FragmentEncryptBinding
-import java.io.*
 import java.math.BigInteger
 
 class EncryptFragment : Fragment() {
@@ -80,63 +79,48 @@ class EncryptFragment : Fragment() {
                 edtE.setText(e.toString(), TextView.BufferType.EDITABLE)
                 edtN.setText(n.toString(), TextView.BufferType.EDITABLE)
             }
+            R.id.loadOtherKeyPubEncOptionMenu -> {
+                val dialogFileChoose = DialogFileChoose("Load other public key", requireContext(), null,
+                    resultLauncher, LOAD_OTHER_PUBLIC_KEY, requireView())
+                dialogFileChoose.showExportDialog()
+
+            }
             R.id.exportEncryptedTextEncOptionMenu -> {
-                showExportDialog("Export Encrypted Text", requireContext())
+                if( binding.encryptedTextEditText.text.isNullOrEmpty()){
+                    Toast.makeText(context, "Encrypt text is empty", Toast.LENGTH_SHORT).show()
+                } else {
+                    val dialogFileChoose = DialogFileChoose("Export Encrypted Text", requireContext(), listPlainText,
+                        null, EXPORT_ENCRYPTED_TEXT, requireView())
+                    dialogFileChoose.showExportDialog()
+                }
             }
         }
         return super.onOptionsItemSelected(item)
     }
 
+    @SuppressLint("SetTextI18n")
+    private var resultLauncher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == Activity.RESULT_OK) {
+                val data: Intent? = result.data
+                val uri = data!!.data
+                if (uri != null) {
+                    val myFile = MyFile()
+                    val (e, n) = myFile.loadOtherPublicKeyFile(requireContext(), uri)
+                    val edtE = binding.eNumberEditText
+                    val edtN = binding.nNumberEditText
+                    encryptE = e
+                    encryptN = n
+
+                    edtE.setText(e.toString(), TextView.BufferType.EDITABLE)
+                    edtN.setText(n.toString(), TextView.BufferType.EDITABLE)
+
+                }
+            }
+        }
+
     override fun onDestroy() {
         super.onDestroy()
         _binding = null
-    }
-
-    private fun showExportDialog(title: String, context: Context) {
-        val dialog = Dialog(context)
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
-        dialog.setContentView(R.layout.export_file_text_dialog)
-        dialog.window!!.setLayout(
-            WindowManager.LayoutParams.MATCH_PARENT,
-            WindowManager.LayoutParams.WRAP_CONTENT
-        )
-        dialog.setCanceledOnTouchOutside(true)
-        val titleTV: TextView = dialog.findViewById(R.id.titleExportDialogTextView)
-        titleTV.text = title
-        val btnClose: ImageView = dialog.findViewById(R.id.closeExportDialogImageView)
-        val edtFileNameDialog: EditText = dialog.findViewById(R.id.fileNameExportEditText)
-        val edtFilePathDialog: EditText = dialog.findViewById(R.id.filePathExportEditText)
-        val btnSave: Button = dialog.findViewById(R.id.saveTextFileExportButton)
-        val folder =
-            Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS)
-
-        edtFilePathDialog.setText(folder.toString(), TextView.BufferType.EDITABLE)
-
-        btnClose.setOnClickListener(object : View.OnClickListener {
-            override fun onClick(v: View?) {
-                dialog.dismiss()
-            }
-        })
-
-        btnSave.setOnClickListener(object : View.OnClickListener {
-            @RequiresApi(Build.VERSION_CODES.R)
-            override fun onClick(v: View?) {
-
-                if (TextUtils.isEmpty(edtFileNameDialog.getText().toString())) {
-                    Toast.makeText(context, "File name is empty", Toast.LENGTH_SHORT).show()
-                    return
-                }
-
-                var fileName: String = edtFileNameDialog.getText().toString()
-                val arr = fileName.split("\\.").toTypedArray()
-                if (arr.size == 1) fileName += ".txt"
-
-                val myFile = MyFile()
-
-                myFile.saveEncryptFile(context, folder, fileName, listPlainText)
-                dialog.dismiss()
-            }
-        })
-        dialog.show()
     }
 }
